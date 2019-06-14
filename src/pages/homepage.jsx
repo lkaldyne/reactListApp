@@ -56,18 +56,18 @@ export class HomePage extends React.Component {
                     <Col sm={6} md = {8}>
                         <Input type="text" name="text" id="exampletext" placeholder="Enter Some Text" />
                     </Col>
-                    <Col sm={3} md = {2}>
-                        {this.state.isLoading ?
-                            <React.Fragment>
-                                <Button color="secondary" outline={ false } onClick={this.clickSubmit} disabled>Submit</Button> <Spinner type="grow" color="secondary" />
-                            </React.Fragment> 
-                            :
-                            <Button color="secondary" outline={ false } onClick={this.clickSubmit}>Submit</Button>
-                        }
-                        
-                        
-                    </Col>
-                    
+                    {this.state.isLoading ?
+                        <React.Fragment>
+                            <Col sm={3} md = {2}>
+                                <Button color="secondary" outline={ false } onClick={this.clickSubmit} disabled>Submit</Button>
+                            </Col>
+                            <Col sm={3} md = {2}>
+                                <Spinner type="grow" color="secondary" />
+                            </Col>
+                        </React.Fragment> 
+                        :
+                        <Button style={{marginLeft:"15px"}} color="secondary" outline={ false } onClick={this.clickSubmit}>Submit</Button>
+                        }                    
                 </Row>
                 <Row>
                     <Col sm={6} md={8}>
