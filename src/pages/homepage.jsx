@@ -1,11 +1,13 @@
 import React from 'react';
-import { Button, Input, Container, Row, Col, ListGroup, ListGroupItem } from 'reactstrap';
+import { Button, Input, Container, Row, Col, ListGroup, ListGroupItem, Spinner } from 'reactstrap';
 
 export class HomePage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            itemList: []
+            itemList: [],
+            isLoading: false,
+            currentText: ""
         }
     }
 
@@ -16,10 +18,15 @@ export class HomePage extends React.Component {
     clickSubmit = () => {
         let text = document.getElementById("exampletext").value
         console.log(text)
-        this.addItem({
-            text
-        })
-        this.clearBox()
+        this.setState({currentText: text});
+        setTimeout(this.runAddItem, 2000);
+        this.clearBox();
+        this.setState({isLoading: true});
+    }
+
+    runAddItem = () => {
+        this.addItem({text:this.state.currentText});
+        this.setState({isLoading: false});
     }
 
     addItem = (item) => {
@@ -49,9 +56,18 @@ export class HomePage extends React.Component {
                     <Col sm={6} md = {8}>
                         <Input type="text" name="text" id="exampletext" placeholder="Enter Some Text" />
                     </Col>
-                    <Col sm={6} md = {4}>
-                        <Button color="secondary" outline={ false } onClick={this.clickSubmit}>Submit</Button>
+                    <Col sm={3} md = {2}>
+                        {this.state.isLoading ?
+                            <React.Fragment>
+                                <Button color="secondary" outline={ false } onClick={this.clickSubmit} disabled>Submit</Button> <Spinner type="grow" color="secondary" />
+                            </React.Fragment> 
+                            :
+                            <Button color="secondary" outline={ false } onClick={this.clickSubmit}>Submit</Button>
+                        }
+                        
+                        
                     </Col>
+                    
                 </Row>
                 <Row>
                     <Col sm={6} md={8}>
